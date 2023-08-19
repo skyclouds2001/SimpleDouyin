@@ -11,6 +11,8 @@ func main() {
 
 	r := gin.Default()
 
+	r.Use(gin.Logger())
+
 	r.Static("/static", "./public")
 
 	router := r.Group("/douyin")
@@ -37,5 +39,8 @@ func main() {
 	router.GET("/message/chat/", controller.MessageChat)
 	router.POST("/message/action/", controller.MessageAction)
 
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	err := r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	if err != nil {
+		panic(err)
+	}
 }
