@@ -1,6 +1,7 @@
 package main
 
 import (
+	"SimpleDouyin/controller"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
@@ -11,7 +12,7 @@ func main() {
 
 	router := h.Group("/douyin")
 
-	router.GET("/feed")
+	router.GET("/feed", controller.Feed)
 	router.POST("/user/register")
 	router.POST("/user/login")
 	router.GET("/user")
