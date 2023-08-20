@@ -2,10 +2,13 @@ package main
 
 import (
 	"SimpleDouyin/controller"
+	"SimpleDouyin/repository"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func main() {
+	repository.Init()
+
 	h := server.Default()
 
 	h.Static("/static", "./public")
