@@ -13,7 +13,7 @@ func main() {
 	router := h.Group("/douyin")
 
 	router.GET("/feed", controller.Feed)
-	router.POST("/user/register")
+	router.POST("/user/register", controller.Register)
 	router.POST("/user/login")
 	router.GET("/user", controller.UserInfo)
 	router.POST("/publish/action")

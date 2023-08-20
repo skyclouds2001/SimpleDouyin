@@ -8,20 +8,46 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
+type RegisterResponse struct {
+	common.Response
+	UserId int64  `json:"user_id,omitempty"`
+	Token  string `json:"token,omitempty"`
+}
+
+func Register(ctx context.Context, c *app.RequestContext) {
+	username := c.Query("username")
+	password := c.Query("password")
+	println(username, password)
+
+	c.JSON(consts.StatusOK, RegisterResponse{
+		Response: common.Response{
+			StatusCode: 0,
+			StatusMsg:  "",
+		},
+		UserId: 0,
+		Token:  "",
+	})
+}
+
+type LoginResponse struct {
+	common.Response
+}
+
 type UserInfoResponse struct {
 	common.Response
-	User repository.User `json:"user,omitempty"`
+	User *repository.User `json:"user,omitempty"`
 }
 
 func UserInfo(ctx context.Context, c *app.RequestContext) {
 	userId := c.Query("user_id")
 	token := c.Query("token")
 	println(userId, token)
+
 	c.JSON(consts.StatusOK, UserInfoResponse{
 		Response: common.Response{
 			StatusCode: 0,
 			StatusMsg:  "",
 		},
-		User: repository.User{},
+		User: &repository.User{},
 	})
 }
