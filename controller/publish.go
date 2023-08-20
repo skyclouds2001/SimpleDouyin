@@ -8,6 +8,30 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
+type PublishActionResponse struct {
+	common.Response
+}
+
+func PublishAction(ctx context.Context, c *app.RequestContext) {
+	token := c.PostForm("token")
+	title := c.PostForm("title")
+	data, err := c.FormFile("data")
+	if err != nil {
+		c.JSON(consts.StatusOK, common.Response{
+			StatusCode: 1,
+			StatusMsg:  "",
+		})
+	}
+	println(token, title, data)
+
+	c.JSON(consts.StatusOK, PublishActionResponse{
+		Response: common.Response{
+			StatusCode: 0,
+			StatusMsg:  "",
+		},
+	})
+}
+
 type PublishListResponse struct {
 	common.Response
 	VideoList []repository.Video `json:"video_list"`
