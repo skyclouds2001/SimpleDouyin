@@ -34,7 +34,7 @@ func PublishAction(ctx context.Context, c *app.RequestContext) {
 
 type PublishListResponse struct {
 	common.Response
-	VideoList []repository.Video `json:"video_list"`
+	VideoList []repository.Video `json:"video_list,omitempty"`
 }
 
 func PublishList(ctx context.Context, c *app.RequestContext) {
