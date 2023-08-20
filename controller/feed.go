@@ -16,6 +16,9 @@ type FeedResponse struct {
 }
 
 func Feed(ctx context.Context, c *app.RequestContext) {
+	latestTime := c.Query("latest_time")
+	token := c.Query("token")
+	println(latestTime, token)
 	c.JSON(consts.StatusOK, FeedResponse{
 		Response: common.Response{
 			StatusCode: 0,

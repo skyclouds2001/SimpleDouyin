@@ -15,7 +15,7 @@ func main() {
 	router.GET("/feed", controller.Feed)
 	router.POST("/user/register")
 	router.POST("/user/login")
-	router.GET("/user")
+	router.GET("/user", controller.UserInfo)
 	router.POST("/publish/action")
 	router.GET("/publish/list")
 
