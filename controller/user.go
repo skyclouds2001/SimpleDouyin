@@ -31,6 +31,23 @@ func Register(ctx context.Context, c *app.RequestContext) {
 
 type LoginResponse struct {
 	common.Response
+	UserId int64  `json:"user_id,omitempty"`
+	Token  string `json:"token,omitempty"`
+}
+
+func Login(ctx context.Context, c *app.RequestContext) {
+	username := c.Query("username")
+	password := c.Query("password")
+	println(username, password)
+
+	c.JSON(consts.StatusOK, LoginResponse{
+		Response: common.Response{
+			StatusCode: 0,
+			StatusMsg:  "",
+		},
+		UserId: 0,
+		Token:  "",
+	})
 }
 
 type UserInfoResponse struct {
