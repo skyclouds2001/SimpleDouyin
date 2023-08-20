@@ -17,7 +17,7 @@ func main() {
 	router.POST("/user/login", controller.Login)
 	router.GET("/user", controller.UserInfo)
 	router.POST("/publish/action")
-	router.GET("/publish/list")
+	router.GET("/publish/list", controller.PublishList)
 
 	h.Spin()
 }
