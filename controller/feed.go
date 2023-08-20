@@ -15,7 +15,7 @@ type FeedResponse struct {
 	NextTime  int64              `json:"next_time,omitempty"`
 }
 
-func Feed(ctx context.Context, c *app.RequestContext) {
+func Feed(_ context.Context, c *app.RequestContext) {
 	latestTime := c.Query("latest_time")
 	token := c.Query("token")
 	println(latestTime, token)

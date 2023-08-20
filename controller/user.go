@@ -14,7 +14,7 @@ type RegisterResponse struct {
 	Token  string `json:"token,omitempty"`
 }
 
-func Register(ctx context.Context, c *app.RequestContext) {
+func Register(_ context.Context, c *app.RequestContext) {
 	username := c.Query("username")
 	password := c.Query("password")
 	println(username, password)
@@ -35,7 +35,7 @@ type LoginResponse struct {
 	Token  string `json:"token,omitempty"`
 }
 
-func Login(ctx context.Context, c *app.RequestContext) {
+func Login(_ context.Context, c *app.RequestContext) {
 	username := c.Query("username")
 	password := c.Query("password")
 	println(username, password)
@@ -55,7 +55,7 @@ type UserInfoResponse struct {
 	User *repository.User `json:"user,omitempty"`
 }
 
-func UserInfo(ctx context.Context, c *app.RequestContext) {
+func UserInfo(_ context.Context, c *app.RequestContext) {
 	userId := c.Query("user_id")
 	token := c.Query("token")
 	println(userId, token)

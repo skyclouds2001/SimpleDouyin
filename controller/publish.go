@@ -12,7 +12,7 @@ type PublishActionResponse struct {
 	common.Response
 }
 
-func PublishAction(ctx context.Context, c *app.RequestContext) {
+func PublishAction(_ context.Context, c *app.RequestContext) {
 	token := c.PostForm("token")
 	title := c.PostForm("title")
 	data, err := c.FormFile("data")
@@ -37,7 +37,7 @@ type PublishListResponse struct {
 	VideoList []repository.Video `json:"video_list,omitempty"`
 }
 
-func PublishList(ctx context.Context, c *app.RequestContext) {
+func PublishList(_ context.Context, c *app.RequestContext) {
 	token := c.Query("token")
 	userId := c.Query("user_id")
 	println(userId, token)
