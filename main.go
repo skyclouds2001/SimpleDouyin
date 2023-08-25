@@ -1,16 +1,26 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/skyclouds2001/SimpleDouyin/service"
+	"SimpleDouyin/controller"
+	"SimpleDouyin/repository"
+	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func main() {
-	go service.RunMessageServer()
+	repository.Init()
 
-	r := gin.Default()
+	h := server.Default()
 
-	initRouter(r)
+	h.Static("/static", "./public")
 
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	router := h.Group("/douyin")
+
+	router.GET("/feed", controller.Feed)
+	router.POST("/user/register", controller.Register)
+	router.POST("/user/login", controller.Login)
+	router.GET("/user", controller.UserInfo)
+	router.POST("/publish/action", controller.PublishAction)
+	router.GET("/publish/list", controller.PublishList)
+
+	h.Spin()
 }

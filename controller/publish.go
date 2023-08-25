@@ -1,59 +1,52 @@
 package controller
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"net/http"
-	"path/filepath"
+	"SimpleDouyin/common"
+	"SimpleDouyin/repository"
+	"context"
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
-type VideoListResponse struct {
-	Response
-	VideoList []Video `json:"video_list"`
+type PublishActionResponse struct {
+	common.Response
 }
 
-// Publish check token then save upload file to public directory
-func Publish(c *gin.Context) {
+func PublishAction(_ context.Context, c *app.RequestContext) {
 	token := c.PostForm("token")
-
-	if _, exist := usersLoginInfo[token]; !exist {
-		c.JSON(http.StatusOK, Response{StatusCode: 1, StatusMsg: "User doesn't exist"})
-		return
-	}
-
+	title := c.PostForm("title")
 	data, err := c.FormFile("data")
 	if err != nil {
-		c.JSON(http.StatusOK, Response{
+		c.JSON(consts.StatusOK, common.Response{
 			StatusCode: 1,
-			StatusMsg:  err.Error(),
+			StatusMsg:  "",
 		})
-		return
 	}
+	println(token, title, data)
 
-	filename := filepath.Base(data.Filename)
-	user := usersLoginInfo[token]
-	finalName := fmt.Sprintf("%d_%s", user.Id, filename)
-	saveFile := filepath.Join("./public/", finalName)
-	if err := c.SaveUploadedFile(data, saveFile); err != nil {
-		c.JSON(http.StatusOK, Response{
-			StatusCode: 1,
-			StatusMsg:  err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, Response{
-		StatusCode: 0,
-		StatusMsg:  finalName + " uploaded successfully",
+	c.JSON(consts.StatusOK, PublishActionResponse{
+		Response: common.Response{
+			StatusCode: 0,
+			StatusMsg:  "",
+		},
 	})
 }
 
-// PublishList all users have same publish video list
-func PublishList(c *gin.Context) {
-	c.JSON(http.StatusOK, VideoListResponse{
-		Response: Response{
+type PublishListResponse struct {
+	common.Response
+	VideoList []repository.Video `json:"video_list,omitempty"`
+}
+
+func PublishList(_ context.Context, c *app.RequestContext) {
+	token := c.Query("token")
+	userId := c.Query("user_id")
+	println(userId, token)
+
+	c.JSON(consts.StatusOK, PublishListResponse{
+		Response: common.Response{
 			StatusCode: 0,
+			StatusMsg:  "",
 		},
-		VideoList: DemoVideos,
+		VideoList: []repository.Video{},
 	})
 }

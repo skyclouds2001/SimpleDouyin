@@ -1,22 +1,31 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
+	"SimpleDouyin/common"
+	"SimpleDouyin/repository"
+	"context"
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"time"
 )
 
 type FeedResponse struct {
-	Response
-	VideoList []Video `json:"video_list,omitempty"`
-	NextTime  int64   `json:"next_time,omitempty"`
+	common.Response
+	VideoList []repository.Video `json:"video_list,omitempty"`
+	NextTime  int64              `json:"next_time,omitempty"`
 }
 
-// Feed same demo video list for every request
-func Feed(c *gin.Context) {
-	c.JSON(http.StatusOK, FeedResponse{
-		Response:  Response{StatusCode: 0},
-		VideoList: DemoVideos,
+func Feed(_ context.Context, c *app.RequestContext) {
+	latestTime := c.Query("latest_time")
+	token := c.Query("token")
+	println(latestTime, token)
+
+	c.JSON(consts.StatusOK, FeedResponse{
+		Response: common.Response{
+			StatusCode: 0,
+			StatusMsg:  "",
+		},
+		VideoList: []repository.Video{},
 		NextTime:  time.Now().Unix(),
 	})
 }
