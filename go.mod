@@ -3,7 +3,7 @@ module SimpleDouyin
 go 1.21
 
 require (
-	github.com/cloudwego/hertz v0.7.1
+	github.com/cloudwego/hertz v0.7.2
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/gorm v1.25.5
 )
